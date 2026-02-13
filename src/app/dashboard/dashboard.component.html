@@ -1,0 +1,68 @@
+<div class="navbar">
+  <h2>Spice Garden</h2>
+  <span>Cart: {{cart.length}}</span>
+</div>
+
+<div class="hero">
+  <div class="overlay">
+    <h1>Spice Garden Restaurant</h1>
+    <p>Fresh • Tasty • Affordable</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="layout">
+    <div>
+      <h2>Menu</h2>
+
+      <div class="menu-grid">
+        <div class="card" *ngFor="let item of menuItems">
+          <img [src]="item.image" />
+          <h3>{{item.name}}</h3>
+          <p>₹ {{item.price}}</p>
+
+          <button class="add-btn" (click)="addItem(item)">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="cart-section">
+      <h2>Cart</h2>
+
+      <div *ngIf="cart.length === 0">Cart is empty</div>
+
+      <div *ngFor="let c of cart" class="cart-item">
+        <span>{{c.name}}</span>
+
+        <div class="qty-box">
+          <button (click)="decreaseQty(c)">−</button>
+          <span>{{c.qty}}</span>
+          <button (click)="increaseQty(c)">+</button>
+        </div>
+
+        <span>₹ {{c.price * c.qty}}</span>
+      </div>
+
+      <h3 *ngIf="cart.length > 0">
+        Total: ₹ {{getTotal()}}
+      </h3>
+
+      <button *ngIf="cart.length > 0"
+              class="checkout-btn"
+              (click)="checkout()">
+        Checkout
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup" *ngIf="showCheckout">
+  <div class="popup-content">
+    <h2>Order Placed!</h2>
+    <p>Your food will arrive soon 🍽️</p>
+    <button (click)="closeCheckout()">Close</button>
+  </div>
+</div>
